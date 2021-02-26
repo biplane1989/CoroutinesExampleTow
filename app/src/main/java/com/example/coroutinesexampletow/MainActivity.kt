@@ -37,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         cancel = findViewById(R.id.cancel)
         start = findViewById(R.id.start)
 
+        // extention function
+        val student = Student(1, "orange")
+        Log.d(TAG, "onCreate: id: " + student.getID())
+        student.setName("tomato")
+        Log.d(TAG, "onCreate: name: "+ student.name)
+
         start.setOnClickListener {
             lifecycleScope.launch {
 //                job1 = scop1()
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
             val flow = foo()
             flow.collect {
-                Log.d(TAG, "flow: "+ it)
+                Log.d(TAG, "flow: " + it)
             }
 
             withContext(Dispatchers.Main) {             // thay đổi sang luồng main để cập nhật ui
@@ -102,10 +108,12 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    suspend fun sumB(): Int = withContext(Dispatchers.Default) {                    // cần hỏi: 2 withcontxet có khác nhau không
-        delay(1000)
-        Log.d(TAG, "sumB: ")
-        2
+    suspend fun sumB(): Int {
+        return withContext(Dispatchers.Default) {// cần hỏi: 2 withcontxet có khác nhau không
+            delay(1000)
+            Log.d(TAG, "sumB: ")
+            2
+        }
     }
 
     suspend fun sumC(): Int = withContext(Dispatchers.Default) {
@@ -124,6 +132,4 @@ class MainActivity : AppCompatActivity() {
         val result = a + b + c + d
         Log.d(TAG, "sum: a + b: " + result)
     }
-
-
 }
